@@ -65,6 +65,13 @@
     },
     {
       "type": "shell",
+      "expect_disconnect": true,
+      "scripts": [
+        "scripts/photon-tkg.sh"
+      ]
+    },
+    {
+      "type": "shell",
       "pause_before": "20s",
       "scripts": [
         "scripts/photon-cleanup.sh"
