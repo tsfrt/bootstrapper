@@ -1,4 +1,4 @@
-# Reference for building VMware Harbor Virtual Appliance (OVA) using Packer
+# TKG Bootstrapper (Forked from William Lam's Harbor Appliance)
 
 ## Requirements
 
