@@ -11,26 +11,28 @@ echo $repo | base64 -d > /etc/yum.repos.d/kubernetes.repo
 echo '> Installing TKG Depends...'
 tdnf install -y \
   kubectl \
-  jq
+  jq \
+  gettext
+
+mkdir tkg-bootstrap
+cd tkg-bootstrap
 
 echo '> Pull down yq'
 curl -L -o yq https://github.com/mikefarah/yq/releases/download/v4.16.2/yq_linux_amd64
 install yq /usr/local/bin/yq
 
-echo '> Pull down fips ovs'
-curl -L -o tkg-fips.ova https://tkg-install.s3.us-east-2.amazonaws.com/ubuntu-2004-kube-v1.21.2%2Bvmware.1-fips.1-tkg.1-13104814112952456924.ova
-
-echo '> Pull down registry images'
-curl -L -o fips_images.tar https://tkg-install.s3.us-east-2.amazonaws.com/fips-regisrty.tar
-
-echo '> Pull down registry image'
-curl -L -o registry_image.tar https://tkg-install.s3.us-east-2.amazonaws.com/registry-image.tar
 
 echo '> Pull down cli'
 curl -L -o tanzu-cli.tar https://tkg-install.s3.us-east-2.amazonaws.com/tanzu-cli-bundle-linux-amd64-bs.tar
+tar xvf tanzu-cli.tar
+install cli/core/v1.4.0/tanzu-core-linux_amd64 /usr/local/bin/tanzu
+tanzu plugin clean
+tanzu plugin install --local cli all
 
 echo '> Pull down govc'
 curl -L -o govc_Linux_x86_64.tar.gz https://github.com/vmware/govmomi/releases/download/v0.27.2/govc_Linux_x86_64.tar.gz
+tar -xvf govc_Linux_x86_64.tar.gz 
+install govc /usr/local/bin/
 
 echo '> Pull down config template'
 curl -L -o noavi-template.yaml https://tkg-install.s3.us-east-2.amazonaws.com/noavi-template.yaml
@@ -39,3 +41,26 @@ echo '> Pull down crane'
 curl -L -o crane.tar.gz https://github.com/google/go-containerregistry/releases/download/v0.8.0/go-containerregistry_Linux_x86_64.tar.gz
 tar -xvf crane.tar.gz
 install crane /usr/local/bin
+
+echo '> Pull ovftool'
+curl -L -o ovftool.bundle https://tkg-install.s3.us-east-2.amazonaws.com/VMware-ovftool-4.4.3-18663434-lin.x86_64.bundle
+chmod +x ovftool.bundle
+./ovftool.bundle --extract ovftool && cd ovftool
+mv vmware-ovftool /usr/bin/
+chmod +x /usr/bin/vmware-ovftool/ovftool 
+chmod +x /usr/bin/vmware-ovftool/ovftool.bin
+alias ovftool=/usr/bin/vmware-ovftool/ovftool
+
+echo '> Pull down registry image'
+curl -L -o registry_image.tar https://tkg-install.s3.us-east-2.amazonaws.com/registry-image.tar
+docker load -i registry_image.tar
+
+echo '> Pull down fips ova'
+curl -L -o tkg-fips.ova https://tkg-install.s3.us-east-2.amazonaws.com/ubuntu-2004-kube-v1.21.2%2Bvmware.1-fips.1-tkg.1-13104814112952456924.ova
+mv tkg-fips.ova tkg.ova
+
+echo '> Pull down registry images'
+curl -L -o fips_images.tar https://tkg-install.s3.us-east-2.amazonaws.com/fips-regisrty.tar
+tar xvf fips_images.tar
+
+echo '> finished'

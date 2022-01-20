@@ -1,8 +1,10 @@
-   <ProductSection ovf:required="true">
+    <ProductSection ovf:required="true">
     <Info>Information about the installed software</Info>
-      <Product>TKG Bootstrapper</Product>
-      <Vendor>Tanzu</Vendor>
+      <Product>VMware Harbor Appliance</Product>
+      <Vendor>WilliamLam.com</Vendor>
       <Version>{{VERSION}}</Version>
+      <ProductUrl>https://github.com/lamw/harbor-appliance</ProductUrl>
+      <VendorUrl>https://williamlam.com/</VendorUrl>
       <Category>Networking</Category>
         <Property ovf:key="guestinfo.hostname" ovf:type="string" ovf:userConfigurable="true" ovf:value="harbor.primp-industries.local">
             <Label>Hostname</Label>
@@ -41,7 +43,7 @@
             <Label>Harbor Password</Label>
             <Description>Password for Harbor. Please use a secure password</Description>
         </Property>
-        <Category>Debug</Category>
+        <Category>zDebug</Category>
         <Property ovf:key="guestinfo.debug" ovf:type="boolean" ovf:userConfigurable="true" ovf:value="true">
             <Label>Debugging</Label>
             <Description>Enable Debugging</Description>
@@ -50,50 +52,4 @@
             <Label>Docker Bridge CIDR Network</Label>
             <Description>Customize Docker Bridge CIDR Network (Default 172.17.0.1/16)</Description>
         </Property>
-        <Category>TKG</Category>
-         <Property ovf:key="guestinfo.cluster_name" ovf:type="string" ovf:userConfigurable="true" ovf:value="mgmt-cluster">
-            <Label>Management Cluster Name</Label>
-            <Description>Name of the mgmt cluster</Description>
-        </Property>
-        <Property ovf:key="guestinfo.endpoint_ip" ovf:type="string" ovf:userConfigurable="true" ovf:value="10.212.139.250">
-            <Label>kube api endpont</Label>
-            <Description>IP for Kube VIP endpoint</Description>
-        </Property>
-        <Property ovf:key="guestinfo.cluster" ovf:type="string" ovf:userConfigurable="true" ovf:value="Cluster">
-            <Label>Name of vsphere cluster</Label>
-            <Description>vsphere cluster you are deploying to</Description>
-        </Property>
-        <Property ovf:key="guestinfo.vsphere_host" ovf:type="string" ovf:userConfigurable="true" ovf:value="host">
-            <Label>Name of vsphere host</Label>
-            <Description>vsphere host you are deploying to</Description>
-        </Property>
-        <Property ovf:key="guestinfo.ssh_key" ovf:type="string" ovf:userConfigurable="true" ovf:value="">
-            <Label>SSH public key</Label>
-            <Description>Public key for ssh access to nodes</Description>
-        </Property>
-        <Property ovf:key="guestinfo.vsphere_user" ovf:type="string" ovf:userConfigurable="true" ovf:value="administrator@vsphere.local">
-            <Label>vSphere user</Label>
-            <Description>user</Description>
-        </Property>
-        <Property ovf:key="guestinfo.vsphere_password" ovf:password="true" ovf:type="string" ovf:userConfigurable="true" ovf:value="Ct5JcpvCa4gXbpsWWH!">
-            <Label>vSphere password</Label>
-            <Description>password</Description>
-        </Property>
-        <Property ovf:key="guestinfo.datacenter" ovf:type="string" ovf:userConfigurable="true" ovf:value="/Datacenter">
-            <Label>Datacenter Path</Label>
-            <Description>Path to Datacenter</Description>
-        </Property>
-        <Property ovf:key="guestinfo.folder" ovf:type="string" ovf:userConfigurable="true" ovf:value="tkg">
-            <Label>VM Folder</Label>
-            <Description>VM folder</Description>
-        </Property>
-         <Property ovf:key="guestinfo.network" ovf:type="string" ovf:userConfigurable="true" ovf:value="Extra">
-            <Label>VM Network</Label>
-            <Description>VM Network</Description>
-        </Property>
-         <Property ovf:key="guestinfo.datastore" ovf:type="string" ovf:userConfigurable="true" ovf:value="LUN01">
-            <Label>VM Datastore</Label>
-            <Description>VM Datastore</Description>
-        </Property>
-        
     </ProductSection>

@@ -94,6 +94,11 @@
     },
     {
       "type": "file",
+      "source": "files/setup-04-tkg.sh",
+      "destination": "/root/setup/setup-04-tkg.sh"
+    },
+    {
+      "type": "file",
       "source": "files/setup-01-os.sh",
       "destination": "/root/setup/setup-01-os.sh"
     },
