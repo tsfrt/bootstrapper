@@ -132,6 +132,7 @@ ${BOOTSTRAP_DIR}/tkg.ova \
 }
 
 cd /root/tkg-bootstrap
+HOME=/root
 
 create_project
 
@@ -146,5 +147,7 @@ sleep 15
 copy_images
 
 push_fips_compat
+
+sleep 10
 
 tkg_install
