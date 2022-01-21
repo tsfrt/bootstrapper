@@ -1,10 +1,5 @@
 #!/bin/bash
-# Copyright 2019 VMware, Inc. All rights reserved.
-# SPDX-License-Identifier: BSD-2
 
-set -euo pipefail
-
-# Extract all OVF Properties
 export DEBUG=$(/root/setup/getOvfProperty.py "guestinfo.debug")
 export HOSTNAME=$(/root/setup/getOvfProperty.py "guestinfo.hostname")
 export IP_ADDRESS=$(/root/setup/getOvfProperty.py "guestinfo.ipaddress")
@@ -29,40 +24,3 @@ export VSPHERE_HOST=$(/root/setup/getOvfProperty.py "guestinfo.vsphere_host")
 export VM_CLUSTER=$(/root/setup/getOvfProperty.py "guestinfo.cluster")
 export ENDPOINT_IP=$(/root/setup/getOvfProperty.py "guestinfo.endpoint_ip")
 export CLUSTER_NAME=$(/root/setup/getOvfProperty.py "guestinfo.cluster_name")
-
-if [ -e /root/ran_customization ]; then
-    exit
-else
-	HARBOR_LOG_FILE=/var/log/bootstrap.log
-	if [ ${DEBUG} == "True" ]; then
-		HARBOR_LOG_FILE=/var/log/bootstrap-debug.log
-		set -x
-		exec 2>> ${HARBOR_LOG_FILE}
-		echo
-        echo "### WARNING -- DEBUG LOG CONTAINS ALL EXECUTED COMMANDS WHICH INCLUDES CREDENTIALS -- WARNING ###"
-        echo "### WARNING --             PLEASE REMOVE CREDENTIALS BEFORE SHARING LOG            -- WARNING ###"
-        echo
-	fi
-
-	echo -e "\e[92mStarting Customization ..." > /dev/console
-
-	echo -e "\e[92mStarting OS Configuration ..." > /dev/console
-	. /root/setup/setup-01-os.sh
-
-	echo -e "\e[92mStarting Network Configuration ..." > /dev/console
-	. /root/setup/setup-02-network.sh
-
-	echo -e "\e[92mStarting Harbor Configuration ..." > /dev/console
-	. /root/setup/setup-03-harbor.sh
-
-	echo -e "\e[92mStarting TKG Configuration ..." > /dev/console
-	. /root/setup/setup-04-tkg.sh
-
-	echo -e "\e[92mCustomization Completed ..." > /dev/console
-
-	# Clear guestinfo.ovfEnv
-	vmtoolsd --cmd "info-set guestinfo.ovfEnv NULL"
-
-	# Ensure we don't run customization again
-	touch /root/ran_customization
-fi

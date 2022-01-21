@@ -12,7 +12,8 @@ echo '> Installing TKG Depends...'
 tdnf install -y \
   kubectl \
   jq \
-  gettext
+  gettext \
+  git
 
 mkdir tkg-bootstrap
 cd tkg-bootstrap
@@ -51,6 +52,8 @@ chmod +x /usr/bin/vmware-ovftool/ovftool
 chmod +x /usr/bin/vmware-ovftool/ovftool.bin
 alias ovftool=/usr/bin/vmware-ovftool/ovftool
 
+cd /root/tkg-bootstrap
+
 echo '> Pull down registry image'
 curl -L -o registry_image.tar https://tkg-install.s3.us-east-2.amazonaws.com/registry-image.tar
 docker load -i registry_image.tar
@@ -61,6 +64,7 @@ mv tkg-fips.ova tkg.ova
 
 echo '> Pull down registry images'
 curl -L -o fips_images.tar https://tkg-install.s3.us-east-2.amazonaws.com/fips-regisrty.tar
-tar xvf fips_images.tar
+mv fips_images.tar images.tar
 
-echo '> finished'
+echo '> Pull down fips compat images'
+curl -o fips_compat.tar https://tkg-install.s3.us-east-2.amazonaws.com/tkg-compatibility.tar

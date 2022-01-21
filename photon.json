@@ -84,6 +84,11 @@
     },
     {
       "type": "file",
+      "source": "files/env.sh",
+      "destination": "/root/setup/env.sh"
+    },
+    {
+      "type": "file",
       "source": "files/getOvfProperty.py",
       "destination": "/root/setup/getOvfProperty.py"
     },
@@ -91,6 +96,16 @@
       "type": "file",
       "source": "files/setup.sh",
       "destination": "/root/setup/setup.sh"
+    },
+    {
+      "type": "file",
+      "source": "files/setup-05-workload.sh",
+      "destination": "/root/setup/setup-05-workload.sh"
+    },
+    {
+      "type": "file",
+      "source": "files/cluster-management.yaml",
+      "destination": "/root/setup/cluster-management.yaml"
     },
     {
       "type": "file",

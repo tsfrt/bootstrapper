@@ -11,7 +11,7 @@ export BOOTSTRAP_DIR=/root/tkg-bootstrap
 export SRC_REG=localhost:8888
 export HARBOR_USER=admin
 export TKG_CUSTOM_COMPATIBILITY_IMAGE_PATH=fips/tkg-compatibility
-export TKG_CUSTOM_IMAGE_REPOSITORY=localhost/tkg
+export TKG_CUSTOM_IMAGE_REPOSITORY=${DEST_REG}/tkg
 export TKG_CUSTOM_IMAGE_REPOSITORY_SKIP_TLS_VERIFY=true
 export WK_NODE_MEM_MIB=4096
 
@@ -24,24 +24,33 @@ EOF
 }
 
 tkg_install () {
-  mkdir -p /etc/docker/certs.d/${DEST_REG}/  
   
   echo $(get_insecure_registry) > /etc/docker/daemon.json
-  systemctl restart docker
-
-  openssl s_client \
-  -showcerts \
-  -connect $DEST_REG:443  2>/dev/null </dev/null | \
-  sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > /etc/docker/certs.d/${DEST_REG}/ca.crt
+  systemctl stop iptables
+  systemctl stop docker
+  sleep 5
+  systemctl start docker
+  sleep 5
+  docker-compose -f /root/harbor/docker-compose.yml stop
+  sleep 5
+  docker-compose -f /root/harbor/docker-compose.yml start
+  sleep 60
 
   envsubst < "${BOOTSTRAP_DIR}/${TKG_CONFIG}" > ${BOOTSTRAP_DIR}/config.yaml
-  timeout 8s tanzu management-cluster create -f ${BOOTSTRAP_DIR}/config.yaml || true
-  mv -f ~/.config/tanzu/tkg/bom ~/.config/tanzu/tkg/bom-old
-  mv -f ~/.config/tanzu/tkg/compatibility ~/.config/tanzu/tkg/compatibility-old
+  
+  timeout 15s tanzu management-cluster create -f ${BOOTSTRAP_DIR}/config.yaml -v9 -e || true
+  rm -Rf /root/.config/tanzu/tkg/bom
+  rm -Rf /root/.config/tanzu/tkg/compatibility
+  
   tanzu management-cluster create -f ${BOOTSTRAP_DIR}/config.yaml -v9
+  systemctl start iptables
+  
+  
+
 }
 
 run_registry () {
+  tar -xvf ${BOOTSTRAP_DIR}/images.tar
 
   sudo docker run -d \
   -p 8888:5000 \
@@ -53,6 +62,8 @@ run_registry () {
 }
 
 copy_images () {
+  
+
   crane auth login $DEST_REG -u $HARBOR_USER -p $HARBOR_PASSWORD
 
   #only src requires auth
@@ -69,6 +80,12 @@ copy_images () {
       done <<< ${images}
 
   done <<< ${list_of_repos}
+}
+
+push_fips_compat () {
+  crane push \
+  ${BOOTSTRAP_DIR}/fips_compat.tar \
+  ${DEST_REG}/tkg/fips/tkg-compatibility:v1 --insecure
 }
 
 create_project () {
@@ -114,6 +131,8 @@ ${BOOTSTRAP_DIR}/tkg.ova \
 
 }
 
+cd /root/tkg-bootstrap
+
 create_project
 
 create_tkg_folder || true
@@ -122,6 +141,10 @@ upload_ova
 
 run_registry
 
+sleep 15
+
 copy_images
+
+push_fips_compat
 
 tkg_install
