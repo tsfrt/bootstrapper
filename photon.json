@@ -32,6 +32,7 @@
       "remote_password": "{{ user `builder_host_password` }}",
       "ssh_username": "{{ user `guest_username` }}",
       "ssh_password": "{{ user `guest_password` }}",
+      "ssh_timeout": "10m",
       "ssh_port": 22,
       "format": "ovf",
       "shutdown_command": "/sbin/shutdown -h now",
