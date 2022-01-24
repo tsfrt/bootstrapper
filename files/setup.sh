@@ -58,6 +58,9 @@ else
 	echo -e "\e[92mStarting TKG Configuration ..." > /dev/console
 	. /root/setup/setup-04-tkg.sh
 
+	echo -e "\e[92mStarting workload Configuration ..." > /dev/console
+	. /root/setup/setup-05-workload.sh || true
+
 	echo -e "\e[92mCustomization Completed ..." > /dev/console
 
 	# Clear guestinfo.ovfEnv

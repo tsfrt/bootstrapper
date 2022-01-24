@@ -132,7 +132,7 @@ ${BOOTSTRAP_DIR}/tkg.ova \
 }
 
 cd /root/tkg-bootstrap
-HOME=/root
+export HOME=/root
 
 create_project
 
