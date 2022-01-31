@@ -1,0 +1,38 @@
+
+---
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: ${MGMT_CONTEXT}-APP
+  namespace: kapp-gitops-mgmt
+spec:
+  serviceAccountName: kapp-sa
+  fetch:
+    - git:
+        url: ${GIT_REPO}
+        ref: origin/${GIT_BRANCH}
+        secretRef:
+          name: kapp-secret
+  template:
+    - sops:
+        pgp:
+          privateKeysSecretRef:
+            name: pgp-key
+    - ytt:
+        ignoreUnknownComments: true
+        paths:
+        - "mgmt-cluster/${MGMT_CONTEXT}/"
+        - "mgmt-cluster/common"
+        - lib
+    - kbld: {}
+  deploy:
+    - kapp: {}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kapp-secret
+  namespace: kapp-gitops-mgmt
+stringData:
+  username: ${GIT_USER}
+  password: ${GIT_PASSWORD}

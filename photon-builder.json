@@ -1,7 +1,7 @@
 {
-  "builder_host": "10.212.138.10",
+  "builder_host": "10.213.221.11",
   "builder_host_username": "root",
-  "builder_host_password": "Ct5JcpvCa4gXbpsWWH!",
+  "builder_host_password": "F6ZUPs5ZF3uFguRtxg!",
   "builder_host_datastore": "LUN01",
   "builder_host_portgroup": "Extra"
 }

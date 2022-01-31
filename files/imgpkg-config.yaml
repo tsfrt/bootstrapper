@@ -1,0 +1,39 @@
+---
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: ${MGMT_CONTEXT}-APP
+  namespace: kapp-gitops-mgmt
+spec:
+  serviceAccountName: kapp-sa
+  fetch:
+  - imgpkgBundle:
+      image: ${IMGPKG_REF}
+  template:
+    - sops:
+        pgp:
+          privateKeysSecretRef:
+            name: pgp-key
+    - ytt:
+        inline:
+          paths:
+            app-imgpkg-overlay.yaml: |
+              #@ load("@ytt:overlay", "overlay")
+
+              #@overlay/match by=overlay.subset({"kind":"App"}),expects="0+"
+              ---
+              spec:
+                fetch:
+                  #@overlay/match by=overlay.index(0)
+                  #@overlay/replace
+                  - imgpkgBundle:
+                       image: ${IMGPKG_REF}
+        ignoreUnknownComments: true
+        paths:
+        - "mgmt-cluster/${MGMT_CONTEXT}/"
+        - "mgmt-cluster/common"
+        - lib
+    - kbld: {}
+  deploy:
+    - kapp: {}
+  

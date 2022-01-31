@@ -95,5 +95,25 @@
             <Label>VM Datastore</Label>
             <Description>VM Datastore</Description>
         </Property>
-        
+        <Category>TKG</Category>
+        <Property ovf:key="guestinfo.git_repo" ovf:type="string" ovf:userConfigurable="true" ovf:value="">
+            <Label>Git Repo</Label>
+            <Description>Git Repo url to bootstrap from</Description>
+        </Property>
+        <Property ovf:key="guestinfo.git_branch" ovf:type="string" ovf:userConfigurable="true" ovf:value="">
+            <Label>VM Datastore</Label>
+            <Description>Branch of Git Repo to use</Description>
+        </Property>
+         <Property ovf:key="guestinfo.git_user" ovf:type="string" ovf:userConfigurable="true" ovf:value="">
+            <Label>Git Username</Label>
+            <Description>Git Usesrname for auth</Description>
+        </Property>
+        <Property ovf:key="guestinfo.git_user_password" ovf:password="true" ovf:type="string" ovf:userConfigurable="true" ovf:value="">
+            <Label>Git Password</Label>
+            <Description>Git Password or Auth token</Description>
+        </Property>
+        <Property ovf:key="guestinfo.imgpkg_ref"  ovf:type="string" ovf:userConfigurable="true" ovf:value="">
+            <Label>Imgpkg Reference</Label>
+            <Description>Image reference for configuration imgpkg.  Ignored if Git Repo is populated.</Description>
+        </Property>
     </ProductSection>

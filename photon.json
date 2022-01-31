@@ -2,9 +2,9 @@
   "min_packer_version": "1.6.3",
   "variables": {
     "photon_ovf_template": "photon.xml.template",
-    "ovftool_deploy_vcenter": "vcsa-01.haas-498.pez.vmware.com",
+    "ovftool_deploy_vcenter": "vcsa-01.haas-417.pez.vmware.com",
     "ovftool_deploy_vcenter_username": "administrator@vsphere.local",
-    "ovftool_deploy_vcenter_password": "Ct5JcpvCa4gXbpsWWH!"
+    "ovftool_deploy_vcenter_password": "F6ZUPs5ZF3uFguRtxg!"
   },
   "builders": [
     {

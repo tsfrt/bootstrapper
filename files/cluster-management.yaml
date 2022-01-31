@@ -23,35 +23,6 @@ subjects:
     name: kapp-sa
     namespace: kapp-gitops-mgmt
 ---
-apiVersion: kappctrl.k14s.io/v1alpha1
-kind: App
-metadata:
-  name: pez-498-mgmt
-  namespace: kapp-gitops-mgmt
-spec:
-  serviceAccountName: kapp-sa
-  fetch:
-    - git:
-        url: https://github.com/tsfrt/cluster-mgmt
-        ref: origin/dev
-        secretRef:
-          name: toms-github
-  template:
-    - sops:
-        pgp:
-          privateKeysSecretRef:
-            name: pgp-key
-    - ytt:
-        ignoreUnknownComments: true
-        paths:
-        - "mgmt-cluster/pez-498/"
-        - "mgmt-cluster/common"
-        - "mgmt-cluster/env-config/pez-498"
-        - lib
-    - kbld: {}
-  deploy:
-    - kapp: {}
----
 apiVersion: v1
 kind: Secret
 metadata:
@@ -140,13 +111,5 @@ stringData:
     lNDNtk5TuaB4gHQIM+O1XrakwPo3wvvNLe0ikya53YG14nKJofrfHO9i4DbEIg==
     =Zfea
     -----END PGP PRIVATE KEY BLOCK-----
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: toms-github
-  namespace: kapp-gitops-mgmt
-stringData:
-  username: tseufert@gmail.com
-  password: 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
+
 
