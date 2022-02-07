@@ -24,3 +24,25 @@ export VSPHERE_HOST=$(/root/setup/getOvfProperty.py "guestinfo.vsphere_host")
 export VM_CLUSTER=$(/root/setup/getOvfProperty.py "guestinfo.cluster")
 export ENDPOINT_IP=$(/root/setup/getOvfProperty.py "guestinfo.endpoint_ip")
 export CLUSTER_NAME=$(/root/setup/getOvfProperty.py "guestinfo.cluster_name")
+
+# needed for TKG step
+export CP_NODE_DISK_GIB=100
+export CP_NODE_MEM_MIB=4096
+export CP_NUM_OF_CPU=4
+export RESOURCE_POOL=""
+export WK_NODE_DISK_GIB=100
+export TKG_CONFIG=noavi-template.yaml
+export BOOTSTRAP_DIR=/root/tkg-bootstrap
+export SRC_REG=localhost:8888
+export HARBOR_USER=admin
+export TKG_CUSTOM_COMPATIBILITY_IMAGE_PATH=fips/tkg-compatibility
+export TKG_CUSTOM_IMAGE_REPOSITORY=${DEST_REG}/tkg
+export TKG_CUSTOM_IMAGE_REPOSITORY_SKIP_TLS_VERIFY=true
+export WK_NODE_MEM_MIB=4096
+
+export GOVC_URL=$VSPHERE_HOST
+export GOVC_USERNAME=$VSPHERE_USER
+export GOVC_PASSWORD=$VSPHERE_PASSWORD
+export GOVC_INSECURE=true
+
+export HOME=/root
