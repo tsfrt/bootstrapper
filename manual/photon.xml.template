@@ -95,13 +95,13 @@
             <Label>VM Datastore</Label>
             <Description>VM Datastore</Description>
         </Property>
-        <Category>TKG</Category>
+        <Category>Workload Management</Category>
         <Property ovf:key="guestinfo.git_repo" ovf:type="string" ovf:userConfigurable="true" ovf:value="">
             <Label>Git Repo</Label>
             <Description>Git Repo url to bootstrap from</Description>
         </Property>
         <Property ovf:key="guestinfo.git_branch" ovf:type="string" ovf:userConfigurable="true" ovf:value="">
-            <Label>VM Datastore</Label>
+            <Label>Git Branch</Label>
             <Description>Branch of Git Repo to use</Description>
         </Property>
          <Property ovf:key="guestinfo.git_user" ovf:type="string" ovf:userConfigurable="true" ovf:value="">
@@ -115,5 +115,9 @@
         <Property ovf:key="guestinfo.imgpkg_ref"  ovf:type="string" ovf:userConfigurable="true" ovf:value="">
             <Label>Imgpkg Reference</Label>
             <Description>Image reference for configuration imgpkg.  Ignored if Git Repo is populated.</Description>
+        </Property>
+         <Property ovf:key="guestinfo.mgmt_context"  ovf:type="string" ovf:userConfigurable="true" ovf:value="pez-417">
+            <Label>Management Context</Label>
+            <Description>Declarative configuration context</Description>
         </Property>
     </ProductSection>

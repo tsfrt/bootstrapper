@@ -30,6 +30,13 @@ export VM_CLUSTER=$(/root/setup/getOvfProperty.py "guestinfo.cluster")
 export ENDPOINT_IP=$(/root/setup/getOvfProperty.py "guestinfo.endpoint_ip")
 export CLUSTER_NAME=$(/root/setup/getOvfProperty.py "guestinfo.cluster_name")
 
+export MGMT_CONTEXT=$(/root/setup/getOvfProperty.py "guestinfo.mgmt_context")
+export IMGPKG_REF=$(/root/setup/getOvfProperty.py "guestinfo.imgpkg_ref")
+export GIT_PASSWORD=$(/root/setup/getOvfProperty.py "guestinfo.git_user_password")
+export GIT_USER=$(/root/setup/getOvfProperty.py "guestinfo.git_user")
+export GIT_BRANCH=$(/root/setup/getOvfProperty.py "guestinfo.git_branch")
+export GIT_REPO=$(/root/setup/getOvfProperty.py "guestinfo.git_repo")
+
 if [ -e /root/ran_customization ]; then
     exit
 else
