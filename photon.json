@@ -105,6 +105,16 @@
     },
     {
       "type": "file",
+      "source": "files/git-config.yaml",
+      "destination": "/root/setup/git-config.yaml"
+    },
+    {
+      "type": "file",
+      "source": "files/imgpkg-config.yaml",
+      "destination": "/root/setup/imgpkg-config.yaml"
+    },
+    {
+      "type": "file",
       "source": "files/cluster-management.yaml",
       "destination": "/root/setup/cluster-management.yaml"
     },
