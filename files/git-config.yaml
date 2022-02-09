@@ -3,7 +3,7 @@
 apiVersion: kappctrl.k14s.io/v1alpha1
 kind: App
 metadata:
-  name: ${MGMT_CONTEXT}-APP
+  name: ${MGMT_CONTEXT}-app
   namespace: kapp-gitops-mgmt
 spec:
   serviceAccountName: kapp-sa
