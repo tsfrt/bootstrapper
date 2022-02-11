@@ -68,3 +68,11 @@ mv fips_images.tar images.tar
 
 echo '> Pull down fips compat images'
 curl -o fips_compat.tar https://tkg-install.s3.us-east-2.amazonaws.com/tkg-compatibility.tar
+
+echo '> Installing carvel tools'
+curl -L https://carvel.dev/install.sh | bash
+
+echo '> Installing k9s'
+curl -L -o k9s.tar.gz https://github.com/derailed/k9s/releases/download/v0.25.18/k9s_Linux_x86_64.tar.gz
+tar -xvf  k9s.tar.gz 
+install k9s /usr/bin/
