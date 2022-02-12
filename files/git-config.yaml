@@ -10,7 +10,7 @@ spec:
   fetch:
     - git:
         url: ${GIT_REPO}
-        ref: origin/${GIT_BRANCH}
+        ref: ${GIT_BRANCH}
         secretRef:
           name: kapp-secret
   template:
@@ -19,6 +19,14 @@ spec:
           privateKeysSecretRef:
             name: pgp-key
     - ytt:
+        inline:
+          paths:
+            app-imgpkg-overlay.yaml: |
+              #@data/values
+              --- 
+              cluster:
+                gitRepo: ${GIT_REPO}
+                gitBranch: ${GIT_BRANCH}
         ignoreUnknownComments: true
         paths:
         - "mgmt-cluster/${MGMT_CONTEXT}/"

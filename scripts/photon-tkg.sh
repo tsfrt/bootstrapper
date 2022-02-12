@@ -62,10 +62,6 @@ echo '> Pull down fips ova'
 curl -L -o tkg-fips.ova https://tkg-install.s3.us-east-2.amazonaws.com/ubuntu-2004-kube-v1.21.2%2Bvmware.1-fips.1-tkg.1-13104814112952456924.ova
 mv tkg-fips.ova tkg.ova
 
-echo '> Pull down registry images'
-curl -L -o fips_images.tar https://tkg-install.s3.us-east-2.amazonaws.com/fips-regisrty.tar
-mv fips_images.tar images.tar
-
 echo '> Pull down fips compat images'
 curl -o fips_compat.tar https://tkg-install.s3.us-east-2.amazonaws.com/tkg-compatibility.tar
 
@@ -76,3 +72,11 @@ echo '> Installing k9s'
 curl -L -o k9s.tar.gz https://github.com/derailed/k9s/releases/download/v0.25.18/k9s_Linux_x86_64.tar.gz
 tar -xvf  k9s.tar.gz 
 install k9s /usr/bin/
+
+echo 'checkout cluster management'
+git clone https://github.com/tsfrt/cluster-mgmt.git
+
+echo '> Pull down registry images'
+curl -L -o fips_images.tar https://tkg-install.s3.us-east-2.amazonaws.com/fips-regisrty.tar
+mv fips_images.tar images.tar
+
