@@ -74,7 +74,7 @@ tar -xvf  k9s.tar.gz
 install k9s /usr/bin/
 
 echo 'checkout cluster management'
-git clone https://github.com/tsfrt/cluster-mgmt.git
+git clone https://tsfrt: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@github.com/tsfrt/cluster-mgmt.git
 
 echo '> Pull down registry images'
 curl -L -o fips_images.tar https://tkg-install.s3.us-east-2.amazonaws.com/fips-regisrty.tar
